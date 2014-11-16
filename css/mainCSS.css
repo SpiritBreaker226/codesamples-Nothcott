@@ -1,0 +1,1056 @@
+/*
+
+    Basic Styles
+
+*/
+
+body {
+    margin: 0;
+    font-size: 32px;
+    height: 100%;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+h1 {
+    margin: 20px 0 25px;
+}
+
+h2 {
+    margin: 0 20px 20px 0;
+}
+
+input[type=text], input[type=email], input[type=password], select {
+    width: 700px;
+    height: 63px;
+    font-size: 34px;
+}
+
+input[type=checkbox] {
+    border: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 34px;
+}
+
+a {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.sectionBody {
+    margin-bottom: 140px;
+}
+
+.sectionBody a {
+    color: #452b14;
+}
+
+.sectionBody a.aOrangeLink {
+    color: #FFF;
+}
+
+.divSectionText {
+    margin: 30px 34px 0;
+}
+
+.sectionItemDisplayBuy h1 {
+    margin-top: 0;
+}
+
+.aOrangeLink {
+    background-color: #c07e09;
+    padding: 20px;
+    text-decoration: none;
+    border-radius: 15px;
+    color: #fff;
+}
+
+.aBurgundyLink {
+    background-color: #800020;
+    padding: 20px;
+    text-decoration: none;
+    border-radius: 15px;
+    color: #fff;
+}
+
+.sectionBody a.aBurgundyLink {
+    color: #FFF;
+}
+
+.lblFontUppercase {
+    text-transform: uppercase;
+}
+
+.aTextUnderline {
+    text-decoration: underline;
+}
+
+/*
+    
+    Tableless Forms
+
+*/
+
+.customContainer {
+}
+
+.customHeader {
+} 
+
+.customFooter {
+    clear: both;
+} 
+
+.customLeft {
+    float: left;
+} 
+
+.customMiddle {
+    float: left;
+} 
+
+.customRight {
+    float: right;
+}
+
+/*
+    
+    Tableless Forms - Login and Region and Customer Section
+
+*/
+
+.divBasicFourmContainer {
+    margin: 40px 0;
+}
+
+.divBasicFourmFooter {
+}
+
+.divBasicFourmLeft {
+    text-align: right;
+    width: 35.5%;
+    padding-top: 20px;
+}
+
+.divBasicFourmRight {
+    margin-left: 25px;
+}
+
+/*
+    
+    Tableless Forms - Header - Information Section
+
+*/
+
+#divHeaderInfoContainer {
+    color: #FFF;
+    position: absolute;
+    width: 100%;
+}
+
+#divHeaderInfoFooter {
+}
+
+#divHeaderInfoLeft {
+    text-align: left;
+    width: 49%;
+    margin-left: 25px;
+}
+
+#divHeaderInfoRight {
+    text-align: right;
+    width: 48%;
+    margin-right: 25px;
+}
+
+/*
+    
+    Tableless Forms - Header - Information Section - Search
+
+*/
+
+.divHeaderInformationSearchContainer {
+    padding: 21px 32px;
+}
+
+.divHeaderInformationSearchFooter {
+}
+
+.divHeaderInformationSearchLeft {
+    margin: 18px 45px 0 0;
+}
+
+.divHeaderInformationSearchMiddle {
+    width: 83%;
+    margin-right: 45px;
+}
+
+.divHeaderInformationSearchRight {
+    width: 120px;
+    margin-top: 22px;
+    text-align: right;
+}
+
+/*
+    
+    Tableless Forms - Forum - Text - Clear
+
+*/
+
+.divForumTextClearContainer {
+}
+
+.divForumTextClearFooter {
+}
+
+.divForumTextClearLeft {
+    width: 97.5%;
+}
+
+.divForumTextClearLongLeft {
+    width: 915px;
+}
+
+.divForumTextClearRight {
+    height: 42px;
+    padding-top: 20px;
+    width: 42px;
+}
+
+/*
+    
+    Tableless Forms - Footer - Content
+
+*/
+
+#divFooterContentContainer {
+    text-align: center;
+    background-color: #452b14;
+    color: #FFF;
+    font-size: 30px;
+    padding: 36px 25px 24px;
+}
+
+#divFooterContentFooter {
+}
+
+#divFooterContentLeft {
+
+}
+
+#divFooterContentMiddle {
+    text-align: center;
+    width: 80%;
+}
+
+#divFooterContentRight {
+
+}
+
+/*
+    
+    Tableless Forms - Fabric/Swatch Details - Header
+
+*/
+
+.divFabricDetailsHeaderContainer {
+    margin: 50px 3% 0;
+}
+
+.divFabricDetailsHeaderFooter {
+    padding: 25px 0;
+}
+
+.divFabricDetailsHeaderLeft {
+    width: 50%;
+}
+
+.divFabricDetailsHeaderRight {
+    width: 50%;
+    text-align: right;
+}
+
+/*
+    
+    Tableless Forms - Fabric/Swatch Details - Header - Date
+
+*/
+
+.divFabricDetailsHeaderDateContainer {
+    margin: 0 0 45px;
+}
+
+.divFabricDetailsHeaderDateFooter {
+}
+
+.divFabricDetailsHeaderDateLeft {
+    width: 48%;
+}
+
+.divFabricDetailsHeaderDateRight {
+    width: 52%;
+}
+
+/*
+    
+    Tableless Forms - Cart - Header
+
+*/
+
+.divCartItemHeaderContainer {
+    background-color: #e0c5a3;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.divCartItemHeaderFooter {
+}
+
+.divCartItemHeaderLeft {
+    padding-left: 17px;
+    width: 10.3%;
+}
+
+.divCartItemHeaderMiddle {
+    width: 13%;
+    text-align: center;
+}
+
+.divCartItemHeaderRight {
+
+}
+
+/*
+    
+    Tableless Forms - Cart - Shipping Date
+
+*/
+
+.divCartItemShippingDateContainer {
+    width: 99.2%;
+    background-color: #CCFFFF;
+    padding: 20px 0 20px 16px;
+}
+
+.divCartItemShippingDateFooter {
+}
+
+.divCartItemShippingDateLeft {
+    width: 40%;
+    padding-top: 20px;
+}
+
+.divCartItemShippingDateRight {
+
+}
+
+/*
+    
+    Tableless Forms - Cart - Body
+
+*/
+
+.divCartItemBodyContainer {
+    margin: 50px 0;
+}
+
+.divCartItemBodyFooter {
+}
+
+.divCartItemBodyLeft {
+    padding-left: 1px;
+}
+
+.divCartItemBodyMiddle {
+    width: 13%;
+    text-align: center;
+}
+
+.divCartItemBodyRight {
+    padding-top: 15px;
+}
+
+/*
+    
+    Tableless Forms - Cart - Totals
+
+*/
+
+.divCartItemTotalsContainer {
+    margin-top: 20px;
+    padding: 20px 0;
+    border-top: 2px solid #333300;
+}
+
+.divCartItemTotalsFooter {
+}
+
+.divCartItemTotalsLeft {
+    width: 79%;
+    padding-right: 15px;
+    text-align: right;
+}
+
+.divCartItemTotalsRight {
+
+}
+
+/*
+    
+    Tableless Forms - Cart - Grand Totals
+
+*/
+
+#divCartItemGrandTotalContainer {
+    background-color: #e3a856;
+    padding: 20px 0;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+}
+
+#divCartItemGrandTotalFooter {
+}
+
+#divCartItemGrandTotalLeft {
+    width: 62%;
+    color: #FFF;
+    padding-left: 34px;
+}
+
+#divCartItemGrandTotalMiddle {
+    margin-top: 40px;
+    width: 21%;
+}
+
+#divCartItemGrandTotalRight {
+    padding-top: 40px;
+}
+
+/*
+    
+    Tableless Forms - Cart - Order Details - Billing / Shipping
+
+*/
+
+.divCartOrderDetailsBillingShippingContainer {
+    
+}
+
+.divCartOrderDetailsBillingShippingFooter {
+}
+
+.divCartOrderDetailsBillingShippingLeft {
+    width: 49%;
+    padding: 20px 0;
+    margin:0 10px 0 0;
+}
+
+.divCartOrderDetailsBillingShippingRight {
+    width: 49%;
+    padding: 20px 0;
+}
+
+/*
+    
+    Tableless Forms - Cart - Order Details - Billing / Shipping - Items
+
+*/
+
+.divCartOrderDetailsBillingShippingItemsContainer {
+}
+
+.divCartOrderDetailsBillingShippingItemsFooter {
+    padding: 10px 0;
+    margin: 10px 0;
+    border-bottom: 2px solid #333300;
+}
+
+.divCartOrderDetailsBillingShippingItemsLeft {
+    width: 48%;
+}
+
+.divCartOrderDetailsBillingShippingItemsRight {
+    width: 48%;
+}
+
+/*
+
+    The Area for Section that hidden from the User
+
+*/
+
+#divLoadingGrayBG {
+    z-index: 1002;
+}
+
+#divLoadingScreen {
+    z-index: 1003;
+}
+
+.divJustHidden {
+    display: none;
+}
+
+.divBasicMessage {
+    padding: 14px;
+    line-height: 29px;
+    text-align: center;
+    color: #FF0000;
+    display: none;
+}
+
+.divBasicHidden {
+    padding: 14px 20px 14px 0;
+    display: none;
+    position: absolute;
+    z-index: 1001;
+}
+
+.divHiddenCentre {
+    /*margin: 265px 0 0 386px;*/
+    margin: 300px 0 0 680px;
+}
+
+.divHiddenLeft {
+    /*margin: 45px 0 0 386px;*/
+    margin: 50px 0 0 462px;
+}
+
+.divBasicHiddlenBackground {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    background-color: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    z-index: 1000;
+    display: none;
+}
+
+.divHiddlenBody {
+    padding: 15px 13px;
+    text-align: left;
+    text-transform: none;
+}
+
+.divHiddenLightboxBody {
+    margin-top: 12px;
+}
+
+.boardBox {
+    padding: 14px;
+    border: 2px solid #000000;
+}
+
+.divClose {
+    margin: 0 0 0 730px;
+    position: absolute;
+    text-align: center;
+    background-color: #000000;
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    z-index: 2;
+}
+
+.aHiddenClose {
+    padding: 11px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 35px;
+}
+
+.lblHiddlenBodyTitle {
+    color: #000;
+    font-size: 41px;
+    text-decoration: underline;
+}
+
+.divHiddlenBodyTitle {
+    width: 664px;
+    padding: 24px 41px;
+    border-radius: 10px 10px 0 0;
+    background-color: #f8931d;
+}
+
+.divHiddlenInnerBody {
+    width: 664px;
+    padding: 27px 41px;
+    border-radius: 0 0 15px 15px;
+    background-color: #e4eaf1;
+    color: #000;
+}
+
+/*
+
+    Header
+
+*/
+
+#headerMain {
+}
+
+#sectionHeaderText {
+    background-color: #452b14;
+    padding: 38px 0;
+}
+
+#divNorthcottLogo {
+    text-align: center;
+}
+
+#imgMainLogo {
+    width: 15%;
+}
+
+#divSubMenuBody {
+    padding: 0 40px;
+}
+
+#navNavigation {
+    width: 100%;
+    background-color: #a69782;
+    position: relative;
+    z-index: 3;
+}
+
+#divSubMenuBody {
+    padding: 0 0 80px;
+}
+
+#divSubMenuBody a {
+    color: #FFF;
+    text-decoration: none;
+
+    /* To allow the user to click on the butotn above and below the link */
+    padding: 20px 0;
+}
+
+#txtSearch {
+    width: 101%;
+}
+
+.spanHeaderCustomerNumberCasing {
+    display: inline-block;
+    text-transform: lowercase;
+}
+
+.spanHeaderCustomerNumberCasing:first-letter {
+    text-transform: uppercase;
+}
+
+.NavivagtionNonActive {
+    color: #FFF;
+}
+
+.NavivagtionActive {
+    color: #3E2716;
+}
+
+.mainMenu .first {
+    width: 22%;
+}
+
+.divFabricCategoriesList {
+    width: 25%;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.divFabricCategoriesList a {
+    padding: 20px 10px;
+}
+
+.divFabricCategoriesList a:hover, .divFabricCategoriesList a:focus {
+    color: #3E2716;
+}
+
+/*
+
+    Footer
+
+*/
+
+#footerMain {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8.5%;
+}
+
+/*
+
+    404 error section
+
+*/
+
+#div404ErrorMessage {
+}
+
+#div404Button {
+    margin-top: 50px;
+    width: 100%;
+}
+
+/*
+
+    Login
+
+*/
+
+.divFabricBannerImage {
+    background-color: #f8f1e7;
+}
+
+.imgFabricBannerImage {
+    width: 100%;
+}
+
+.divSubmit {
+    margin: 30px 0 0 0;
+    width: 74%;
+    text-align: right;
+}
+
+/*
+
+    Region & Customer
+
+*/
+
+#divRegionMain {
+}
+
+#divRegionSubmit {
+    margin-top: 60px;
+    width: 72.4%;
+}
+
+/*
+
+    Collection
+
+*/
+
+.divCollectionDetails {
+    color: #333300;
+    padding: 20px 0;
+    text-align: center;
+    width: 25%;
+}
+
+.divCollectionName {
+    font-weight: bold;
+    word-wrap: break-word;
+}
+
+.divCollectionImage {
+    display: inline-block;
+}
+
+.divCollectionImage img {
+    border: 2px solid #333300;
+}
+
+.divIndiCollectionDetails {
+    font-size: 30px;
+    min-height: 152px;
+}
+
+.divFabCatName {
+    font-weight: bold;
+    word-wrap: break-word;
+}
+
+/*
+
+    Fablic / Swatch Details
+
+*/
+
+.divFabricDetailsHeader {
+    margin-bottom: 75px;
+}
+
+.divColorwayCartLinks {
+    margin: 25px 0 45px;
+}
+
+.divColorwayCartLinks .divFabricDetailsHeaderContainer {
+    margin: 25px 0;
+}
+
+.divFabricImage {
+    padding-top: 30px;
+}
+
+.divFabricDetails {
+    color: #333300;
+}
+
+.divSelectedItemInDetails .divCollectionImage img {
+    border: 2px solid #000;
+    box-shadow: 0 5px 50px #800020;
+}
+
+.selectFabricQTY {
+    border: 0;
+    width: 125px;
+    font-size: 34px;
+}
+
+.lblFabricPricing {
+    font-weight: bold;
+    color: #c60;
+}
+
+.divFabricPricing {
+    line-height: 65px;
+    margin: 25px 0;
+}
+
+/*
+
+    Customer Information
+
+*/
+
+#divCorrectContactusFollowingInforFooter {
+    margin-top: 35px;
+    text-align: center;
+}
+
+/*
+
+    Cart
+
+*/
+
+#divCartItemGrandTotalMiddle .divCartItemTotalsContainer {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#divCartItemGrandTotalMiddle .divCartItemTotalsLeft {
+    width: 53%;
+}
+
+#txtBillingToShipToPOBox, #selAdditionalShipTo {
+    width: 450px;
+}
+
+.divCartItemShippingDateLeft .divFabricDetailsHeaderDateLeft {
+    width: 26%;
+}
+
+.divCartItemShippingDateLeft .divFabricDetailsHeaderDateRight {
+    width: 70%;   
+}
+
+.divCartItemShippingDateRight input {
+    width: 390px;
+}
+
+.divCartItemBodyLeft img {
+    border: 2px solid #333300;
+}
+
+.divCartOrderDetailsBillingShippingItemsField {
+    padding: 20px 0;
+}
+
+.sectionStartingPostionForSectionsInCart {
+    padding-top: 180px;
+}
+
+.aCartShippingDate {
+    text-decoration: underline;
+}
+
+.cartAction {
+}
+
+.lblFabricQTY {
+}
+
+.divAddPromoCode {
+    padding: 20px 0px 20px 0px;
+}
+
+.promoCodeLabel {
+    padding:5px 10px 0px 0px;
+}
+
+.promoCodeInput input {
+    width:150px;
+}
+
+.promoCodeSubmit {
+    padding:14px 0px 0px 10px;
+}
+
+.divOrderListHeaderContainer {
+    background-color: #e0c5a3;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.divOrderListHeaderLeft {
+    padding-left: 17px;
+}
+
+.divOrderListHeaderMiddle {
+    width: 14%;
+    text-align: center;
+}
+
+.divOrderListHeaderFooter {
+}
+
+.divOrderListBodyContainer {
+    margin: 50px 0;
+}
+
+.divOrderListBodyLeft {
+    padding-left: 1px;
+}
+
+.divOrderListBodyMiddle {
+    width: 14%;
+    text-align: center;
+}
+
+.divOrderListBodyRight {
+    padding-top: 15px;
+}
+
+.divOrderListBodyFooter {
+}
+
+.sectionStartingPostionForSectionsInOrderList {
+    padding-top: 180px;
+}
+
+.divOrderDetailBackToList {
+    padding: 15px 20px 0px 0px;
+}
+
+.divOrderDetailsBillingShippingLeft {
+    width: 49%;
+    padding: 20px 0;
+    margin:0 10px 0 0;
+}
+
+.divOrderDetailsBillingShippingItemsContainer {
+}
+
+.divOrderDetailsBillingShippingItemsLeft {
+    width: 48%;
+}
+
+.divOrderDetailsBillingShippingItemsRight {
+    width: 48%;
+}
+
+.divOrderItemHeaderContainer {
+    background-color: #e0c5a3;
+    width: 100%;
+    padding: 20px 0;
+}
+
+.divOrderItemHeaderLeft {
+    padding-left: 17px;
+    width: 10.3%;
+}
+
+.divOrderItemHeaderMiddle {
+    width: 13%;
+    text-align: center;
+}
+
+.divOrderItemHeaderCollectionName{
+    width: 17%;
+    text-align: center;
+}
+
+.divOrderItemBodyContainer {
+    margin: 50px 0;
+}
+
+.divOrderItemBodyLeft {
+    padding-left: 8px;
+    width: 10.3%;
+}
+
+.divOrderItemBodyMiddle {
+    width: 13%;
+    text-align: center;
+}
+
+.divOrderItemBodyCollectionName{
+    width: 17%;
+    text-align: center;
+}
+
+.divOrderItemBodyRight {
+    padding-top: 15px;
+}
+
+.divOrderItemTotalsContainer {
+    margin-top: 20px;
+    padding: 20px 0;
+    border-top: 2px solid #333300;
+}
+
+.divOrderItemTotalsLeft {
+    width: 79%;
+    padding-right: 15px;
+    text-align: right;
+}
+
+.divOrderItemTotalsRight {
+
+}
+
+.divRapidOrderPlacementLable {
+    width:120px;
+    padding: 10px 5px 0px 0px;
+}
+
+.divRapidOrderPlacementInput {
+    width:48%;
+}
+
+.divRapidOrderPlacementFooter {
+}
+
+.divRapidOrderPlacementAddToOrder {
+    padding:50px 0px 0px 120px;
+}
+
+.divRapidOrderPlacementInputContainer {
+    padding:10px 0px 0px 0px;
+}
+
+.divRemoveAllFromCart {
+    padding: 20px 0px 20px 0px;
+}
+
+.removeAllFromCartSubmit {
+    padding:14px 0px 0px 10px;
+}
+
+#divMessageRemoveAllFromCart {
+    clear:both;
+    margin:5px 0px 0px 0px;
+}
