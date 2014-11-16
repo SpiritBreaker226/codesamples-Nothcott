@@ -1,0 +1,1301 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        
+        <link rel="stylesheet" type="text/css" href="css/mainCSS.css" />
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+        
+   	    <title>Northcott</title>
+
+        <script src="js/jquery-1.9.1.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/phonegap.js"></script>
+		<script src="js/MainJS.js"></script>
+		<script src="js/Ajax.js"></script>
+        <script src="js/PhonegapJqueryStart.js"></script>
+
+		<script type="text/javascript">
+            function onLoad() {
+                console.log("On Page Load");
+
+                //starts both the Phonegap and JQuery Frameworks
+                app.initialize(function () {
+                    // turns off the status bar
+                    StatusBar.hide(false);
+
+                    //does the basic start when the page loads up
+                    startUp([getDocID("divHeaderInfoRight"), getDocID('navNavigation'), getDocID("bodyApp"), getDocID('selectRegion'), getDocID('spanHeaderCustomerInfor'), getDocID('divCollectionsDetails'), getDocID('divSubMenuBody'), getDocID('divCartDetails'), 'divSwatchDetails', 'divCartItemGrandTotalContainer', 'lblGrandTotal'], ['h1FabricTitle', 'h2FabricDesigner', 'h2FabricAvaliable', 'aShippingDate', 'aResetShippingDate', 'aAddSelectedItemsCart', 'AllColourwayCart', 'ThisColourwayCart', 'selectColourway', 'divCollectionSummary', 'divSelectColorwayContainer', 'divFabricDetailsHalfColorwaysCart', 'AllColourwayCartHalf', 'ThisColourwayCartHalf']);
+                });
+
+                var intHeaderMainHeight = $('#headerMain').height() + $('#navNavigation').height();//holds the main's header 
+                var intLocationOfItemBeingMovedTop = $('#headerMain').offset().top - $('#navNavigation').offset().top - parseFloat($('#divCartItemGrandTotalContainer').css('marginTop').replace(/auto/, 0));//holds the Location of the item being moved
+
+                // sets the location grand total container
+                $('#divCartItemGrandTotalContainer').css("top", intHeaderMainHeight);
+                
+                $(window).scroll(function (event) {
+                    var intCurrentLocationOnYAxes = $(this).scrollTop();//holds the location of the screen
+
+                    // checks if the users has past the tag that is being moved
+                    if (intCurrentLocationOnYAxes >= intLocationOfItemBeingMovedTop && intCurrentLocationOnYAxes >= intHeaderMainHeight)
+                        // moves the tag over to the very top of the screen
+                        $('#divCartItemGrandTotalContainer').css("top", intCurrentLocationOnYAxes);
+                    else
+                        // resets the grand total container to its orginal spot
+                        $('#divCartItemGrandTotalContainer').css("top", intHeaderMainHeight);
+                });
+
+                // gets the version of the app in order to not be confessing as to the version
+                window.appversion.getVersionNumber(function(arg) {
+                    lblVerDisplay.innerHTML = "ver. " + arg[0] + " (" + arg[1] + ")";
+                });
+
+                console.log("Device is Ready");
+            }//end of onLoad()
+        </script>
+    </head>
+    <body onLoad="onLoad();" id="bodyApp">
+        <h1 class="divJustHidden">Northcott App</h2>
+
+        <div id="divLoadingGrayBG" class="divBasicHiddlenBackground"></div>
+
+        <header id="headerMain">
+            <section id="sectionHeaderText">
+                <h2 class="divJustHidden">Header Informaiton</h2>
+
+                <div class="customContainer" id="divHeaderInfoContainer">
+                    <div class="customLeft" id="divHeaderInfoLeft">
+                        <span id="spanHeaderCustomerInfor"></span>
+                        &nbsp;
+                    </div>
+                    <div class="customRight" id="divHeaderInfoRight"></div>
+                    <div class="customFooter" id="divHeaderInfoFooter"></div>
+                </div>
+
+                <div id="divNorthcottLogo">
+                    <img alt="Northcott - Cottons that feel like skilk" src="img/NorthcottLogo.png" id="imgMainLogo" />
+                </div>
+            </section>
+            <nav id="navNavigation" class="divJustHidden">
+                <h2 class="divJustHidden">Main Menu</h2>
+                <div class="customContainer divHeaderInformationSearchContainer">
+                    <div class="customLeft divHeaderInformationSearchLeft">
+                        <a class="NavivagtionNonActive" id="aFabric" href="javascript:void(0);" onclick="getFabricMenuItems(window.localStorage.getItem('strDomainName') + '/ASP/AppGetFabricCategories.aspx', 'divMessageCollection', ['divCollectionsDetails', getDocID('divSubMenuBody'), 'divHeaderInfoRight', 'navNavigation', 'bodyApp', 'sectionCheckout', 'divCartDetails', 'aShippingDate', 'divMessageMenuItems', window.localStorage.getItem('strDomainName') + '/ASP/AppGetCollectionList.aspx', 'divSwatchDetails', 'divCartItemGrandTotalContainer', 'lblGrandTotal', 'spanHeaderCustomerInfor'], ['h1FabricTitle', 'h2FabricDesigner', 'h2FabricAvaliable', 'aShippingDate', 'aResetShippingDate', 'aAddSelectedItemsCart', 'AllColourwayCart', 'ThisColourwayCart', 'selectColourway', 'divCollectionSummary', 'divSelectColorwayContainer', 'divFabricDetailsHalfColorwaysCart', 'AllColourwayCartHalf', 'ThisColourwayCartHalf']);">Fabrics</a>
+                    </div>
+                    <div class="customMiddle divHeaderInformationSearchMiddle">
+                        <div class="divForumTextClearContainer customContainer">
+                           <div class="divForumTextClearLeft customLeft">
+                                <input type="text" id="txtSearch" placeholder="Search by Collection, Fabric, Quilts or Patterns" maxlength="250" autocorrect="off" autocapitalize="off" onKeyUp="javascript:clearText('txtSearch','aSearchClear','imgSearchError', false);" />
+
+                                <div class="divBasicMessage" id="divHeaderInformationSearchMessage"></div>
+                            </div>
+                            <div class="divForumTextClearRight customRight">
+                                <a href="javascript:void(0);" id="aSearchClear" class="divJustHidden" onClick="clearText('txtSearch','aSearchClear','imgSearchError', true);">
+                                    <img alt="Clear" src="img/ButtonClear@2x.png" />
+                                </a>
+                                <img alt="Error" src="img/ErrorMark@2x.png" class="divJustHidden" id="imgSearchError" />
+                                &nbsp;
+                            </div>
+                            <div class="divForumTextClearFooter customFooter"></div>
+                        </div>
+                    </div>
+                    <div class="customRight divHeaderInformationSearchRight">
+                        <a onClick="javascript:getSearch(window.localStorage.getItem('strDomainName') + '/ASP/AppGetSearch.aspx', 'divHeaderInformationSearchMessage', getDocID('txtSearch'), getDocID('aSearchClear'), getDocID('imgSearchError'), getDocID('divSearchResults'), 'divMessageSearchResults', ['divHeaderInfoRight', 'navNavigation', 'bodyApp', 'selectRegion', 'spanHeaderCustomerInfor', 'divCollectionsDetails', 'divSubMenuBody', 'divCartDetails', 'divSwatchDetails', 'divCartItemGrandTotalContainer', 'lblGrandTotal'], ['h1FabricTitle', 'h2FabricDesigner', 'h2FabricAvaliable', 'aShippingDate', 'aResetShippingDate', 'aAddSelectedItemsCart', 'AllColourwayCart', 'ThisColourwayCart', 'selectColourway', 'divCollectionSummary', 'divSelectColorwayContainer', 'divFabricDetailsHalfColorwaysCart', 'AllColourwayCartHalf', 'ThisColourwayCartHalf']);" href="javascript:void(0);" class="aOrangeLink">Search</a>
+                    </div>
+                    <div class="customFooter divHeaderInformationSearchFooter"></div>
+                </div>
+
+                <div id="divSubMenuBody" class="divJustHidden"></div>
+            </nav>
+        </header>
+        
+        <!-- Start of Login section -->
+
+        <section data-role="page" id="sectionLogin" class="divJustHidden sectionBody">
+            <div class="divFabricBannerImage">
+                <img src="img/headerLoginImage.png" alt="Image of Fabrics" class="imgFabricBannerImage" />
+            </div>
+
+            <div class="divSectionText">
+                <h2>Welcome to the Northcott Web Ordering System!</h2>
+
+                <div id="divMainLoginBody">
+                    <div class="divBasicMessage" id="divMessageLogin"></div>
+
+                    <div class="customContainer divBasicFourmContainer">
+                        <div class="customLeft divBasicFourmLeft">
+                            <label>Email: </label>
+                        </div>
+                        <div class="customLeft divBasicFourmRight">
+                            <input type="email" id="txtEmail"/>
+                        </div>
+                        <div class="customFooter divBasicFourmFooter"></div>
+                    </div>
+                    <div class="customContainer divBasicFourmContainer">
+                        <div class="customLeft divBasicFourmLeft">
+                            <label>Password: </label>
+                        </div>
+                        <div class="customLeft divBasicFourmRight">
+                            <input type="password" id="txtPassword" />
+                            <br />
+                            <label>(case sensitive)</label>
+                        </div>
+                        <div class="customFooter divBasicFourmFooter"></div>
+                    </div>
+
+                    <div class="divSubmit">
+                        <a class="aOrangeLink" href="javascript:void(0);" onClick="sendLogin(window.localStorage.getItem('strDomainName') + '/ASP/AppLogin.aspx', 'divMessageLogin', getDocID('txtEmail'), getDocID('txtPassword'), [getDocID('divHeaderInfoRight'), getDocID('navNavigation'), getDocID('bodyApp'), getDocID('selectRegion'), getDocID('spanHeaderCustomerInfor')]);">Submit</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- End of Login section -->
+
+        <!-- Start of Customer Selection section -->
+
+        <section data-role="page" id="sectionCustomer" class="divJustHidden sectionBody">
+            <div class="divFabFricBannerImage">
+                <img src="img/headerLoginImage.png" alt="Image of Fabrics" class="imgFabricBannerImage" />
+            </div>
+
+            <div class="divSectionText">
+                <h2>Regions and Customer</h2>
+
+                <label>Please select a region and a customer you would like to place orders for below: </label>
+
+                <div class="divBasicMessage" id="divMessageRegion"></div>
+
+                <div id="divRegionMain">
+                    <div class="customContainer divBasicFourmContainer">
+                        <div class="customLeft divBasicFourmLeft">
+                            <label>Region: </label>
+                        </div>
+                        <div class="customLeft divBasicFourmRight">
+                            <select id="selectRegion" onchange="getCustomerList(window.localStorage.getItem('strDomainName') + '/ASP/AppGetCustomerList.aspx', 'divMessageRegion', getSelectOption(getDocID('selectRegion')), getDocID('selectCustomers'), getDocID('divSelectCustomer'));">
+                                <option value="0">Select a Region</option>
+                            </select>
+                        </div>
+                        <div class="customFooter divBasicFourmFooter"></div>
+                    </div>
+
+                    <div class="customContainer divBasicFourmContainer divJustHidden" id="divSelectCustomer">
+                        <div class="customLeft divBasicFourmLeft">
+                            <label>Customers:</label>
+                        </div>
+                        <div class="customLeft divBasicFourmRight">
+                            <select id="selectCustomers">
+                                <option value="0">Select a Customer</option>
+                            </select>
+                        </div>
+                        <div class="customFooter divBasicFourmFooter"></div>
+                    </div>
+
+                    <div class="divSubmit" id="divRegionSubmit">
+                        <a class="aOrangeLink" href="javascript:void(0);" onClick="getSelectedCustomer('divMessageRegion', getDocID('selectRegion'), getDocID('selectCustomers'), [getDocID('divHeaderInfoRight'), getDocID('navNavigation'), getDocID('bodyApp'), getDocID('selectRegion'), getDocID('spanHeaderCustomerInfor'), getDocID('divCollectionsDetails'), getDocID('divSubMenuBody'), getDocID('divCartDetails'), 'divSwatchDetails', 'divCartItemGrandTotalContainer', 'lblGrandTotal'], ['h1FabricTitle', 'h2FabricDesigner', 'h2FabricAvaliable', 'aShippingDate', 'aResetShippingDate', 'aAddSelectedItemsCart', 'AllColourwayCart', 'ThisColourwayCart', 'selectColourway', 'divCollectionSummary', 'divSelectColorwayContainer', 'divFabricDetailsHalfColorwaysCart', 'AllColourwayCartHalf', 'ThisColourwayCartHalf']);">Submit</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- End of Customer Selection section -->
+
+        <!-- Start of Collection Selection section -->
+
+        <section data-role="page" id="sectionFabric" class="divJustHidden sectionBody">
+            <div class="divSectionText sectionItemDisplayBuy">
+                <div class="divBasicMessage" id="divMessageCollection"></div>
+
+                <div id="divCollectionsDetails"></div>
+            </div>
+        </section>
+
+        <!-- End of Collection Selection section -->
+
+        <!-- Start of Swatch section -->
+
+        <section data-role="page" id="sectionSwatch" class="divJustHidden sectionBody">
+            <h2 class="divJustHidden">Fabric Details</h2>
+
+            <div class="divSectionText sectionItemDisplayBuy">
+                <div class="divBasicMessage" id="divMessageSwatch"></div>
+
+                <div class='customContainer divFabricDetailsHeaderContainer'>
+                    <div class='customLeft divFabricDetailsHeaderLeft'>
+                        <div class='divFabricDetailsHeader'>
+                            <a href='javascript:void(0);' onclick='javascript:classToggleLayer(getDocID("bodyApp"), getDocID("sectionFabric"), "divJustHidden sectionBody", "section");' title='Back To Fabrics' class='aOrangeLink'>&lt;&lt; Back To Fabrics</a>
+                        </div>
+                        <h1 id="h1FabricTitle"></h1>
+                        <h2 id="h2FabricDesigner"></h2>
+                        <h2 id="h2FabricAvaliable"></h2>
+                    </div>
+                    <div class='customLeft divFabricDetailsHeaderRight'>
+                        <div class='customContainer divFabricDetailsHeaderDateContainer'>
+                            <div class='customLeft divFabricDetailsHeaderDateLeft'>
+                                <label>Date Selected:</label>
+                            </div>
+                            <div class='customRight divFabricDetailsHeaderDateRight'>
+                                <a href='javascript:void(0);' id='aShippingDate' class="aTextUnderline"></a> 
+                                <a href='javascript:void(0);' id='aResetShippingDate' class='aOrangeLink divJustHidden'>Reset</a>
+                            </div> 
+                            <div class='customFooter divFabricDetailsHeaderDateFooter'></div>
+                        </div>                        
+                    </div>
+                    <div class='customFooter divFabricDetailsHeaderFooter' id="divFabricDescription">
+                        <div id="divCollectionSummary"></div>
+                    </div>
+                    <div class="divColorwayCartLinks">
+                        <div class="customContainer divFabricDetailsHeaderContainer" id="divFabricDetailsNonColorwaysCart">
+                            <div class="customLeft divFabricDetailsHeaderLeft">
+                                <a href='javascript:void(0);' id="ThisColourwayCart" class='aOrangeLink'>Add This Colorway to Cart</a>
+                            </div>
+                            <div class="customLeft divFabricDetailsHeaderRight">
+                                <a href='javascript:void(0);' id="AllColourwayCart" class='aOrangeLink'>Add All Colorways to Cart</a>
+                            </div>
+                            <div class="customFooter divFabricDetailsHeaderFooter">&nbsp;</div>
+                        </div>
+                        <div class="customContainer divFabricDetailsHeaderContainer" id="divFabricDetailsHalfColorwaysCart">
+                            <div class="customLeft divFabricDetailsHeaderLeft">
+                                <a href='javascript:void(0);' id="ThisColourwayCartHalf" class='aOrangeLink'>Add This Colorways at Half Selected Quantity to Cart</a>
+                            </div>
+                            <div class="customRight divFabricDetailsHeaderRight">
+                                <a href='javascript:void(0);' id="AllColourwayCartHalf" class='aOrangeLink'>Add All Colorways at Half Selected Quantity to Cart</a>
+                            </div>
+                            <div class="customFooter divFabricDetailsHeaderFooter"></div>
+                        </div>
+                        <div class="customContainer divFabricDetailsHeaderContainer" id="divSelectColorwayContainer">
+                            <div class="customLeft divFabricDetailsHeaderLeft">
+                                <label>Select Colorway</label>
+                            </div>
+                            <div class="customLeft divFabricDetailsHeaderRight">
+                                <select id='selectColourway'></select>
+                            </div>
+                            <div class="customFooter divFabricDetailsHeaderFooter"></div>
+                        </div>
+                    </div>
+                    <div class='divFabricDetailsHeader'>
+                        <a href='javascript:void(0);' class='aBurgundyLink divJustHidden' id='aAddSelectedItemsCart'>Add Selected Item(s) to Cart</a>
+                    </div>
+                </div>
+
+                <div id="divSwatchDetails">
+                    <div class='divCollectionDetails divFabricDetails customLeft' id='1616-28'>
+                        <div class='divCollectionImage divFabricImage'>
+                            <a href='javascript:void(0);' onclick="setSelectedItemsInDetails('1616-28', 1, 828, '9.99');"> 
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28'/> 
+                            </a>
+                        </div>
+                        <div class='divCollectionName divFabricSwatchNumber'>
+                            <label>1616-28</label> 
+                            <br/><label class='lblSwarchDetailsSoldOut'>Sold Out</label>
+                        </div>
+                    </div>
+                    <div class='divCollectionDetails divFabricDetails customLeft' id='1616-28'>
+                        <div class='divCollectionImage divFabricImage'>
+                            <a href='javascript:void(0);' onclick="setSelectedItemsInDetails('1616-28', 1, 828, '9.99');"> 
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28'/> 
+                            </a>
+                        </div>
+                        <div class='divCollectionName divFabricSwatchNumber'>
+                            <label>1616-28</label> 
+                            <br/><label class='lblSwarchDetailsSoldOut'>Sold Out</label>
+                        </div>
+                    </div>
+                    <div class='divCollectionDetails divFabricDetails customLeft' id='1616-28'>
+                        <div class='divCollectionImage divFabricImage'>
+                            <a href='javascript:void(0);' onclick="setSelectedItemsInDetails('1616-28', 1, 828, '9.99');"> 
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28'/> 
+                            </a>
+                        </div>
+                        <div class='divCollectionName divFabricSwatchNumber'>
+                            <label>1616-28</label> 
+                            <br/><label class='lblSwarchDetailsSoldOut'>Sold Out</label>
+                        </div>
+                    </div>
+                    <div class='divCollectionDetails divFabricDetails customLeft' id='1616-28'>
+                        <div class='divCollectionImage divFabricImage'>
+                            <a href='javascript:void(0);' onclick="setSelectedItemsInDetails('1616-28', 1, 828, '9.99');"> 
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28'/> 
+                            </a>
+                        </div>
+                        <div class='divCollectionName divFabricSwatchNumber'>
+                            <label>1616-28</label> 
+                            <br/><label class='lblSwarchDetailsSoldOut'>Sold Out</label>
+                        </div>
+                    </div>
+                    <div class="customFooter"></div>
+                    <div class='divCollectionDetails divFabricDetails customLeft' id='1616-28'>
+                        <div class='divCollectionImage divFabricImage'>
+                            <a href='javascript:void(0);' onclick="setSelectedItemsInDetails('1616-28', 1, 828, '9.99');"> 
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28'/> 
+                            </a>
+                        </div>
+                        <div class='divCollectionName divFabricSwatchNumber'>
+                            <label>1616-28</label> 
+                            <br/><label class='lblSwarchDetailsSoldOut'>Sold Out</label>
+                        </div>
+                    </div>
+                    <div class='divCollectionDetails divFabricDetails customLeft' id='1616-28'>
+                        <div class='divCollectionImage divFabricImage'>
+                            <a href='javascript:void(0);' onclick="setSelectedItemsInDetails('1616-28', 1, 828, '9.99');"> 
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28'/> 
+                            </a>
+                        </div>
+                        <div class='divCollectionName divFabricSwatchNumber'>
+                            <label>1616-28</label> 
+                            <br/><label class='lblSwarchDetailsSoldOut'>Sold Out</label>
+                        </div>
+                    </div>
+                    <div class='divCollectionDetails divFabricDetails customLeft' id='1616-28'>
+                        <div class='divCollectionImage divFabricImage'>
+                            <a href='javascript:void(0);' onclick="setSelectedItemsInDetails('1616-28', 1, 828, '9.99');"> 
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28'/> 
+                            </a>
+                        </div>
+                        <div class='divCollectionName divFabricSwatchNumber'>
+                            <label>1616-28</label> 
+                            <br/><label class='lblSwarchDetailsSoldOut'>Sold Out</label>
+                        </div>
+                    </div>
+                    <div class='divCollectionDetails divFabricDetails customLeft' id='1616-28'>
+                        <div class='divCollectionImage divFabricImage'>
+                            <a href='javascript:void(0);' onclick="setSelectedItemsInDetails('1616-28', 1, 828, '9.99');"> 
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28'/> 
+                            </a>
+                        </div>
+                        <div class='divCollectionName divFabricSwatchNumber'>
+                            <label>1616-28</label> 
+                            <br/><label class='lblSwarchDetailsSoldOut'>Sold Out</label>
+                        </div>
+                    </div>
+                    <div class="customFooter"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- End of Swatch section -->
+
+        <!-- Start of Checkout section -->
+
+        <section data-role="page" id="sectionCheckout" class="divJustHidden sectionBody">
+            <h2 class="divJustHidden">Checkout</h2>
+
+            <div class="divJustHidden customContainer" id="divCartItemGrandTotalContainer">
+                <div class="customLeft" id="divCartItemGrandTotalLeft">
+                    <label class="lblFontUppercase">Fabric Total*</label>
+                    <br>
+                    <label>Total does not include applicable taxes or delivery,<br>
+                    and is subject to change. Product availability varies.</label>
+                </div>
+                <div class="customMiddle" id="divCartItemGrandTotalMiddle">
+                    <div class="customContainer divCartItemTotalsContainer">
+                        <div class="customLeft divCartItemTotalsLeft">
+                            <label>Total: </label>
+                        </div>
+                        <div class="customLeft divCartItemTotalsRight">
+                            <label id="lblGrandTotal"></label>
+                        </div>
+                        <div class="customFooter divCartItemTotalsFooter"></div>
+                    </div>
+                </div>
+                <div class="customLeft" id="divCartItemGrandTotalRight">
+                    <a href='javascript:void(0);' onClick='processCheckout("divMessageCart",["aCheckout", "aCheckoutComplete", getDocID("lblBillingNumber"), getDocID("lblBillingBy"), getDocID("lblBillingDate"), getDocID("lblBillingTo"), getDocID("lblBillingShipTo"), "sectionCart", "sectionShipping", "lblOrderSpecial", "txtOrderSpecial", "sectionCheckout", getDocID("selAdditionalShipTo"), getDocID("divAdditionalShipTo"), getDocID("divCartDetails")]);' class='aOrangeLink' id="aCheckout">Checkout</a>
+                   
+                    <a href="javascript:void(0);" onClick="generateOrderFile(window.localStorage.getItem('strDomainName') + '/ASP/AppCompleteOrder.aspx', 'divMessageCart', 'divCartItemGrandTotalContainer', 'sectionCheckoutThankyou', getDocID('txtBillingToShipToPOBox'));" class="divJustHidden aOrangeLink" id="aCheckoutComplete">Complete Order</a>
+                </div>
+                <div class="customFooter" id="divCartItemGrandTotalFooter"></div>
+            </div>
+
+            <div class="divSectionText sectionItemDisplayBuy">
+                <div class="divBasicMessage sectionStartingPostionForSectionsInCart" id="divMessageCart"></div>
+
+                <section data-role="page" id="sectionCheckoutThankyou" class="divJustHidden sectionBody">
+                    <div class="divFabricBannerImage">
+                        <img src="img/headerLoginImage.png" alt="Login Header" class="imgFabricBannerImage" />
+                    </div>
+
+                    <div class="divSectionText">
+                        <h3>Thank You</h3>
+
+                        <label>Thank you for ordering. Please check your email for confirmation</label>
+                    </div>
+                </section>
+
+                <section id="sectionShipping" class="divJustHidden sectionBody">
+                    <h3 class="divJustHidden">Shipping</h3>
+
+                    <div class="customContainer divCartOrderDetailsBillingShippingContainer">
+                        <div class="customLeft divCartOrderDetailsBillingShippingLeft">
+                            <h4>My Order Details</h4>
+
+                            <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                    <label>Order Number:</label>
+                                </div>
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                    <label id="lblBillingNumber">CBRI0-66</label>
+                                </div>
+                                <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                            </div>
+
+                            <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                    <label>Order By:</label>
+                                </div>
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                    <label id="lblBillingBy">Tahseen Syed</label>
+                                </div>
+                                <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                            </div>
+
+                            <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                    <label>Order Start Date:</label>
+                                </div>
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                    <label id="lblBillingDate">25 April 2014</label>
+                                </div>
+                                <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                            </div>
+
+                            <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                    <label>Bill to:</label>
+                                </div>
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                    <label id="lblBillingTo">
+                                        BRIAN O'ROURKE
+                                        101 COURTLAND AVE.
+                                        VAUGHAN, ONTARIO
+                                        L4K3T5
+                                        Tel: (905)760-00722
+                                    </label>
+                                </div>
+                                <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                            </div>
+                        </div>
+                        <div class="customRight divCartOrderDetailsBillingShippingRight">
+                            <h4>Additional Information</h4>
+
+                            <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                    <label>Ship to:</label>
+                                </div>
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                    <label id="lblBillingShipTo">
+                                        BRIAN O'ROURKE <br>   
+                                        101 COURTLAND AVE.<br>
+                                        VAUGHAN, ONTARIO<br>
+                                        L4K3T5<br>
+                                        Tel: (905)760-00722
+                                    </label>
+                                </div>
+                                <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                            </div>
+
+                            <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divAdditionalShipTo">
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft divCartOrderDetailsBillingShippingItemsField">
+                                    <label>Ship To This Address Instead</label>
+                                </div>
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                    <select id="selAdditionalShipTo" onChange="javascript:changeShipToAddress(getDocID('selAdditionalShipTo'), getDocID('lblBillingShipTo'));"></select>
+                                </div>
+                                <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                            </div>
+
+                            <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft divCartOrderDetailsBillingShippingItemsField">
+                                    <label>PO Box:</label>
+                                </div>
+                                <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                    <input type="text" id="txtBillingToShipToPOBox" maxlength="40">
+                                </div>
+                                <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                            </div>
+                        </div>
+                        <div class="customFooter divCartOrderDetailsBillingShippingFooter"></div>
+                    </div>
+                </section>
+                
+                <section id="sectionCart" class="divJustHidden sectionBody">
+                    <h3 class="divJustHidden">Cart</h3>
+
+                    <div class="customContainer">
+                        <div class="customContainer divAddPromoCode customLeft">
+                            <div class="customLeft promoCodeLabel">
+                                <label>Add Promo Code:</label>
+                            </div>
+                            <div class="customLeft promoCodeInput">
+                                <input type="text" maxlength="20" id="txtPromoCode">
+                            </div>
+                            <div class="customLeft promoCodeSubmit">
+                                <a href="javascript:void(0);" onClick="submitPromoCode(window.localStorage.getItem('strDomainName') + '/ASP/AppSubmitPromoCode.aspx', 'divMessagePromoCode', getDocID('txtPromoCode'));" class="aOrangeLink" id="aSubmitPromoCode">Submit</a>
+                            </div>
+                            <div class="divBasicMessage" id="divMessagePromoCode"></div>
+                        </div>
+
+                        <div class="customContainer divRemoveAllFromCart customRight">
+                            <div class="customLeft removeAllFromCartSubmit">
+                                <a href="javascript:void(0);" onClick="removeAllItemFromCart(window.localStorage.getItem('strDomainName') + '/ASP/AppRemoveAllItemFromCart.aspx', 'divMessageRemoveAllFromCart', 'removeall');" class="aOrangeLink" id="aRemoveAllFromCart">Remove All</a>
+                            </div>
+                            <div class="customLeft removeAllFromCartSubmit">
+                                <a href="javascript:void(0);" onClick="removeAllItemFromCart(window.localStorage.getItem('strDomainName') + '/ASP/AppRemoveAllItemFromCart.aspx', 'divMessageRemoveAllFromCart', 'removeselected');" class="aOrangeLink" id="aRemoveSelectedFromCart">Remove Selected</a>
+                            </div>
+                            <div class="divBasicMessage" id="divMessageRemoveAllFromCart"></div>                            
+                        </div>
+                        <div class="customFooter"></div>
+                    </div>
+
+                    <div class="customContainer divCartItemHeaderContainer">
+                        <div class="customLeft divCartItemHeaderLeft">
+                            <label>Preview</label>
+                        </div>
+                        <div class="customMiddle divCartItemHeaderMiddle">
+                            <label>SKU</label>
+                        </div>
+                        <div class="customMiddle divCartItemHeaderMiddle">
+                            <label>Collection Name</label>
+                        </div>
+                        <div class="customMiddle divCartItemHeaderMiddle">
+                            <label>Price</label>
+                        </div>
+                        <div class="customMiddle divCartItemHeaderMiddle">
+                            <label>Qty</label>
+                        </div>
+                        <div class="customMiddle divCartItemHeaderMiddle">
+                            <label>Discount</label>
+                        </div>
+                        <div class="customMiddle divCartItemHeaderMiddle">
+                            <label>Net Total</label>
+                        </div>
+                        <div id="divCartActionHeader" class="customLeft divCartItemHeaderRight">
+                            <label>Action</label>
+                        </div>
+                        <div class="customFooter divCartItemHeaderFooter"></div>
+                    </div>
+
+                    <div id="divCartDetails">
+                        <div class="customContainer divCartItemShippingDateContainer">
+                            <div class="customLeft divCartItemShippingDateLeft">
+                                <div class='customContainer divFabricDetailsHeaderDateContainer'>
+                                    <div class='customLeft divFabricDetailsHeaderDateLeft'>
+                                        <label>Ship Date:</label>
+                                    </div>
+                                    <div class='customLeft divFabricDetailsHeaderDateRight'>
+                                        <a href='javascript:void(0);' id='aCartShippingDate9152014'>September 15, 2014</a> 
+                                        <a href='javascript:void(0);' id='aResetCartShippingDate9152014' class='aOrangeLink'>Reset</a>
+                                    </div> 
+                                    <div class='customFooter divFabricDetailsHeaderDateFooter'></div>
+                                </div>
+                            </div>
+                            <div class="customLeft divCartItemShippingDateRight">
+                                <label>Special Instructions:</label>
+
+                                <input type='text' maxlength='40' class='txtOrderSpecial' id='txtSpecial129152014'>
+                                <label class='divJustHidden lblOrderSpecial' id='lblSpecial129152014'></label>
+                                <input type='text' maxlength='40' class='txtOrderSpecial' id='txtSpecial229152014'>
+                                <label class='divJustHidden lblOrderSpecial' id='lblSpecial229152014'></label>
+                            </div>
+                            <div class="customFooter divCartItemShippingDateFooter"></div>
+                        </div>
+                        <div class="customContainer divCartItemBodyContainer">
+                            <div class="customLeft divCartItemBodyLeft">
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28' width='190'/>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>F1616-28</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>A Teddy Bear for All Seasons Flannel</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>$115.25</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>100</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>$100.00</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>$1000.00</label>
+                            </div>
+                            <div class="customLeft divCartItemBodyRight">
+                                <a href='javascript:void(0);' onclick='removeCartItem("tagMessage", "arrCartItemDetails[1]", arrCartItemDetails[7]);' class='aOrangeLink'>Remove</a>
+                            </div>
+                            <div class="customFooter divCartItemBodyFooter"></div>
+                        </div>
+                        <div class="customContainer divCartItemBodyContainer">
+                            <div class="customLeft divCartItemBodyLeft">
+                                <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28' width='190'/>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>F1616-28</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>A Teddy Bear for All Seasons Flannel</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>$115.25</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>100</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>$100.00</label>
+                            </div>
+                            <div class="customMiddle divCartItemBodyMiddle">
+                                <label>$1000.00</label>
+                            </div>
+                            <div class="customLeft divCartItemBodyRight">
+                                <a href='javascript:void(0);' onclick='removeCartItem("tagMessage", "arrCartItemDetails[1]", arrCartItemDetails[7]);' class='aOrangeLink'>Remove</a>
+                            </div>
+                            <div class="customFooter divCartItemBodyFooter"></div>
+                        </div>
+                        
+                        <div class="customContainer divCartItemTotalsContainer">
+                            <div class="customLeft divCartItemTotalsLeft">
+                                <label>Subtotal: </label>
+                            </div>
+                            <div class="customLeft divCartItemTotalsRight">
+                                <label id="lblSubtotal9152014">$2000.00</label>
+                            </div>
+                            <div class="customFooter divCartItemTotalsFooter"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- End of Checkout section -->
+
+        <!-- Start of Order List section -->
+        
+        <section data-role="page" id="sectionOrderList" class="divJustHidden sectionBody">
+            <div class="divSectionText">
+                <div class="customContainer divCartItemBodyContainer">
+                    <div class="customLeft">
+                        <h1>Order History</h1>
+                    </div>
+                    <div class="customRight divOrderDetailBackToList">
+                        <a href="javascript:void(0);" onclick="classToggleLayer(getDocID('bodyApp'), getDocID('sectionCustomerDetails'), 'divJustHidden sectionBody', 'section');" class='aOrangeLink'>&lt;&lt; Back To Customer Info</a>
+                    </div>
+                    <div class="customFooter"></div>
+                </div>
+            </div>
+            
+            <div class="divBasicMessage" id="divMessageOrderList"></div>
+
+            <div id="divOrderList">
+                <div class="customContainer divOrderListHeaderContainer">
+                    <div class="customLeft divOrderListHeaderMiddle divOrderListHeaderLeft">
+                        <label>Order Date</label>
+                    </div>
+                    <div class="customMiddle divOrderListHeaderMiddle">
+                        <label>Shipping Date</label>
+                    </div>
+                    <div class="customMiddle divOrderListHeaderMiddle">
+                        <label>Order Number</label>
+                    </div>
+                    <div class="customMiddle divOrderListHeaderMiddle">
+                        <label>P.O Number</label>
+                    </div>
+                    <div class="customMiddle divOrderListHeaderMiddle">
+                        <label>Total</label>
+                    </div>
+                    <div class="customMiddle divOrderListHeaderMiddle">
+                        <label>Shipping Status</label>
+                    </div>
+                    <div class="customMiddle divOrderListHeaderMiddle">
+                        <label>Details</label>
+                    </div>
+                    <div class="customFooter divOrderListHeaderFooter"></div>
+                </div>
+
+                <div class="customContainer divOrderListBodyContainer">
+                    <div class="customMiddle divOrderListBodyMiddle divOrderListBodyLeft">
+                        <label>16 May 2014</label>
+                    </div>
+                    <div class="customMiddle divOrderListBodyMiddle">
+                        <label>01 September 2014</label>
+                    </div>
+                    <div class="customMiddle divOrderListBodyMiddle">
+                        <label>UBRI0-55</label>
+                    </div>
+                    <div class="customMiddle divOrderListBodyMiddle">
+                        <label>23</label>
+                    </div>
+                    <div class="customMiddle divOrderListBodyMiddle">
+                        <label>$561.75</label>
+                    </div>
+                    <div class="customMiddle divOrderListBodyMiddle">
+                        <label>Processing</label>
+                    </div>
+                    <div class="customLeft divOrderListBodyMiddle divOrderListBodyRight">
+                        <a href='javascript:void(0);' onclick='ShowOrderDetail("tagMessage", "arrCartItemDetails[1]", arrCartItemDetails[7]);' class='aOrangeLink'>Details</a>
+                    </div>
+                    <div class="customFooter divOrderListBodyFooter"></div>
+                </div>
+            </div>
+
+            <div id="divOrderDetails" class="divJustHidden">
+                <div class="customContainer divCartItemBodyContainer">
+                    <div class="customLeft">
+                        <h1>My Order Details</h1>
+                    </div>
+                    <div class="customRight divOrderDetailBackToList">
+                        <a href="javascript:void(0);" onclick="ShowOrderList();" class='aOrangeLink'> < Back To List</a>
+                    </div>
+                    <div class="customFooter"></div>
+                </div>
+                <div class="customContainer divCartOrderDetailsBillingShippingContainer">
+                    <div class="customLeft divOrderDetailsBillingShippingLeft">
+                        <h1>Order Information</h1>
+
+                        <div class="customContainer divOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Order Number:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label1">CBRI0-66</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Order Date:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label2">16 May 2014</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Bill to:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label4">
+                                    BRIAN O'ROURKE
+                                    101 COURTLAND AVE.
+                                    VAUGHAN, ONTARIO
+                                    L4K3T5
+                                    Tel: (905)760-00722
+                                </label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Instructions:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label3">Gfgg,Iii</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+                    </div>
+                    <div class="customLeft divCartOrderDetailsBillingShippingRight">
+                        <h1>Shipping Information</h1>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Order Status:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label5">Processing</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Ship Date:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label6">September 01, 2014</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Web OrderID:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label7">UBRI055</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>PRO Order Number:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label8">PRO Order Number</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Last Shipped Date:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label9">Last Shipped Date</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Last Involice Number:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label10">Last Involice Number</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Total Units Ordered:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label11">Total Units Ordered</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Cumulative Units Shipped:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label12">Cumulative Units Shipped</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divOrderDetailsBillingShippingItemsLeft">
+                                <label>Percentage Shipped:</label>
+                            </div>
+                            <div class="customLeft divOrderDetailsBillingShippingItemsRight">
+                                <label id="Label13">Percentage Shipped</label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+                    </div>
+                    <div class="customFooter divCartOrderDetailsBillingShippingFooter"></div>
+                </div>
+
+                <div class="customContainer divOrderItemHeaderContainer">
+                    <div class="customLeft divOrderItemHeaderLeft">
+                        <label>Preview</label>
+                    </div>
+                    <div class="customMiddle divOrderItemHeaderMiddle">
+                        <label>SKU</label>
+                    </div>
+                    <div class="customMiddle divOrderItemHeaderCollectionName divOrderItemHeaderMiddle">
+                        <label>Collection Name</label>
+                    </div>
+                    <div class="customMiddle divOrderItemHeaderMiddle">
+                        <label>Price</label>
+                    </div>
+                    <div class="customMiddle divOrderItemHeaderMiddle">
+                        <label>Qty</label>
+                    </div>
+                    <div class="customMiddle divOrderItemHeaderMiddle">
+                        <label>Discount</label>
+                    </div>
+                    <div class="customMiddle divOrderItemHeaderMiddle">
+                        <label>Sub Total</label>
+                    </div>
+                    <div class="customFooter divCartItemHeaderFooter"></div>
+                </div>
+
+                <div class="customContainer divOrderItemBodyContainer">
+                    <div class="customLeft divOrderItemBodyLeft">
+                        <img src='http://northcott.com/swatchimages/1616-28.jpg' alt='1616-28' width='190'/>
+                    </div>
+                    <div class="customMiddle divOrderItemBodyMiddle">
+                        <label>F1616-28</label>
+                    </div>
+                    <div class="customMiddle divOrderItemBodyCollectionName divOrderItemBodyMiddle">
+                        <label>A Teddy Bear for All Seasons Flannel</label>
+                    </div>
+                    <div class="customMiddle divOrderItemBodyMiddle">
+                        <label>$115.25</label>
+                    </div>
+                    <div class="customMiddle divOrderItemBodyMiddle">
+                        <label>100</label>
+                    </div>
+                    <div class="customMiddle divOrderItemBodyMiddle">
+                        <label>$100.00</label>
+                    </div>
+                    <div class="customMiddle divOrderItemBodyMiddle">
+                        <label>$1000.00</label>
+                    </div>
+                    <div class="customFooter divCartItemBodyFooter"></div>
+                </div>
+                       
+                <div class="customContainer divOrderItemTotalsContainer">
+                    <div class="customLeft divOrderItemTotalsLeft">
+                        <label>Total: </label>
+                    </div>
+                    <div class="customLeft divOrderItemTotalsRight">
+                        <label id="Label14">$2000.00</label>
+                    </div>
+                    <div class="customFooter divCartItemTotalsFooter"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- End of Order List section -->
+
+        <!-- Start of Contact Us section -->
+
+        <section data-role="page" id="sectionSearchResults" class="divJustHidden sectionBody">
+            <div class="divSectionText">
+                <h2>Search Results</h2>
+
+                <div class="divBasicMessage" id="divMessageSearchResults"></div>
+
+                <div id="divSearchResults"></div>
+            </div>
+        </section>
+
+        <!-- End of Contact Us section -->
+
+        <!-- Start of Rapid Order Placement -->
+
+        <section data-role="page" id="sectionRapidOrderPlacement" class="divJustHidden sectionBody">
+            <div class="divSectionText">
+                <h2>Rapid Order Placement</h2>
+
+                <div class="divBasicMessage" id="divMessageRapidOrderPlacement"></div>
+
+                <h1>Please enter the SKUs of the swatches you wish to add to the order:</h1>
+                <div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 1:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU1" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 2:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU2" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 3:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU3" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 4:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU4" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 5:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU5" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 6:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU6" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 7:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU7" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 8:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU8" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 9:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU9" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                    <div class="customContainer divRapidOrderPlacementInputContainer">
+                        <div class="customLeft divRapidOrderPlacementLable">
+                            <label>SKU 10:</label>
+                        </div>
+                        <div class="customLeft divRapidOrderPlacementInput">
+                            <input type="text" id="txtSKU10" maxlength="40" style="width:300px;">
+                        </div>
+                        <div class="customFooter divRapidOrderPlacementFooter"></div>
+                    </div>
+                </div>
+                <div class="customFooter divRapidOrderPlacementAddToOrder">
+                    <a href='javascript:void(0);' onClick="addToOrder(window.localStorage.getItem('strDomainName') + '/ASP/AppAddToOrder.aspx', 'divMessageRapidOrderPlacement', getDocID('txtSKU1'), getDocID('txtSKU2'), getDocID('txtSKU3'), getDocID('txtSKU4'), getDocID('txtSKU5'), getDocID('txtSKU6'), getDocID('txtSKU7'), getDocID('txtSKU8'), getDocID('txtSKU9'), getDocID('txtSKU10'));" class='aOrangeLink'>Add To Order</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- End of Rapid Order Placement -->
+
+        <!-- Start of Customer Details section -->
+
+        <section data-role="page" id="sectionCustomerDetails" class="divJustHidden sectionBody">
+            <div class="divSectionText">
+                <div class="customContainer divCartItemBodyContainer">
+                    <div class="customLeft">
+                        <h1>Customer Info</h1>
+                    </div>
+                    <div class="customRight divOrderDetailBackToList">
+                        <a href="javascript:void(0);" onclick="getOrderInfoList(window.localStorage.getItem('strDomainName') + '/ASP/AppGetOrderList.aspx', 'divMessageOrderList', getDocID('divOrderList'), getDocID('divOrderDetails'));" class='aOrangeLink'>Order History</a>
+                    </div>
+                    <div class="customFooter"></div>
+                </div>
+                
+                <div class="customContainer divCartOrderDetailsBillingShippingContainer">
+                    <div class="customLeft divCartOrderDetailsBillingShippingLeft">
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>First Name:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBasicFirstName"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Last Name:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBasicLastName"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Email:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBasicEmail"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div id="divCorrectContactusFollowingInforFooter">
+                            <label>Please contact us if the following information is incorrect at<br>1-800-268-1466 or </label><a href="">info@northcott.net</a>
+                        </div>
+                    </div>
+                    <div class="customRight divCartOrderDetailsBillingShippingRight">
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingCompany">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Company Name:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingCompany"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingCustomerNumber">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Customer Number:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingCustomerNumber"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingAddress1">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Address 1:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingAddress1"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingAddress2">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Address 2:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingAddress2"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingCity">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>City:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingCity"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingProv">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>State/Province:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingProv"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingPostalCode">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Zip/Postal Code:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingPostalCode"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingPhone">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Phone:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingPhone"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingFax">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Fax:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingFax"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingEmail">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Email:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingEmail"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingWebsite">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Website:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingWebsite"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+
+                        <div class="customContainer divCartOrderDetailsBillingShippingItemsContainer" id="divCustomerInfoBillingContact">
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsLeft">
+                                <label>Contact Name:</label>
+                            </div>
+                            <div class="customLeft divCartOrderDetailsBillingShippingItemsRight">
+                                <label id="lblCustomerInfoBillingContact"></label>
+                            </div>
+                            <div class="customFooter divCartOrderDetailsBillingShippingItemsFooter"></div>
+                        </div>
+                    </div>
+                    <div class="customFooter divCartOrderDetailsBillingShippingFooter"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- End of Customer Details section -->
+
+        <!-- Start of 404 section -->
+
+        <section data-role="page" id="section404" class="divJustHidden sectionBody">
+            <div class="divFabricBannerImage">
+                <img src="img/headerLoginImage.png" alt="Image of Fabrics" class="imgFabricBannerImage" />
+            </div>
+
+            <div class="divSectionText">
+                <h2>Offline</h2>
+
+                <div id="div404ErrorMessage">
+                    <label>Currently offline, connected to either Wifi or Cell connection</label>
+                </div>
+                <div id="div404Button">
+                    <a href="index.html" class="aOrangeLink">Re-Try Connection</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- End of 404 section -->
+
+        <footer id="footerMain">
+            <div class="customContainer" id="divFooterContentContainer">
+                <div class="customLeft" id="divFooterContentLeft">
+                    <a id='aCustomerRegions' href='javascript:void(0);' onclick='javascript:resetCustomerSelection();'>Change Customer</a>
+                </div>
+                <div class="customMiddle" id="divFooterContentMiddle">
+                    <label>Northcott Silk Ltd. &copy; 2013 copyright | </label><label id="lblVerDisplay"></label>
+                </div>
+                <div class="customRight" id="divFooterContentRight">
+                    <a id='aCart' href='javascript:void(0);' onclick='goToCheckoutSection(getDocID("bodyApp"), getDocID("sectionCheckout"), getDocID("divCartDetails"), getDocID("divCartItemGrandTotalContainer"), getDocID("lblGrandTotal"));'>View Cart</a>
+                </div>
+                <div class="customFooter" id="divFooterContentFooter"></div>
+            </div>
+        </footer>
+    </body>
+</html>
